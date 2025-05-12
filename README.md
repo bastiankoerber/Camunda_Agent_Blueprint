@@ -33,7 +33,7 @@ The two links imports **all required artifacts** in two steps:
 
 | Requirement | Notes |
 |-------------|-------|
-| **Camunda 8.8 alpha4** cluster | Cloud SaaS or Self-Managed; ensure the *Agent Orchestration* feature flag is enabled. |
+| **Camunda 8.8 alpha4** cluster | Cloud SaaS or Self-Managed;|
 | Email account (SMTP/IMAP) & credentials | For Gmail use an App Password; for others use provider-specific credentials. |
 | AWS IAM user | Permissions: `bedrock:InvokeModel` (Claude 3 Sonnet/Haiku) and `aoss:*` for your OpenSearch index. |
 | Outbound internet access | Connectors must reach your email server, Bedrock, and OpenSearch endpoints. |
