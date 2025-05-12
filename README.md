@@ -18,11 +18,11 @@ A ready-to-import solution that demonstrates an AI-driven email conversation loo
 
 [Download BPMN Files](https://modeler.ultrawombat.com/import/processes?source=https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Agent%20Blueprint%20(Long%20Term%20Memory).bpmn,https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Escalate%20to%20human%20form.form,https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Review%20case%20resolution.form)
 
-The single link imports **all required artifacts** in one step:
+The two links imports **all required artifacts** in two steps:
 
 | Artifact | Source |
 |----------|--------|
-| **BPMN** – `email-support.bpmn` | this repository |
+| **BPMN** – `Agent%20Blueprint%20(Long%20Term%20Memory).bpmn` | this repository |
 | **Forms** – `form-escalate-human.form`, `form-review-resolution.form` | this repository |
 | **Vector DB Connector template** | Camunda Connectors `release/8.8` branch |
 | **Agent Connector template** | *Camunda_Agent_Blueprint* `release/8.8` branch |
