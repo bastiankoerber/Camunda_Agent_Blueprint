@@ -14,7 +14,7 @@ A ready-to-import solution that demonstrates an AI-driven email conversation loo
 
 ## 1 · two-click import  🡒  **Web Modeler link**
 
-[Download Connector](https://modeler.ultrawombat.com/import/connectors?source=https://raw.githubusercontent.com/camunda/connectors/refs/heads/release/8.8/connectors/agentic-ai/element-templates/agenticai-aiagent-outbound-connector.json,https://raw.githubusercontent.com/camunda/connectors/refs/heads/release/8.8/connectors/embeddings-vector-database/element-templates/embeddings-vector-database-outbound-connector.json)
+[Download Connector](https://modeler.ultrawombat.com/import/connectors?source=https://raw.githubusercontent.com/camunda/connectors/refs/heads/main/connectors/agentic-ai/element-templates/agenticai-aiagent-outbound-connector-8.8.0-alpha4.json,https://raw.githubusercontent.com/camunda/connectors/refs/heads/release/8.8/connectors/embeddings-vector-database/element-templates/embeddings-vector-database-outbound-connector.json)
 
 [Download BPMN Files](https://modeler.ultrawombat.com/import/processes?source=https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Agent%20Blueprint%20(Long%20Term%20Memory).bpmn,https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Escalate%20to%20human%20form.form,https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Review%20case%20resolution.form)
 
