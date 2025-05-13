@@ -53,6 +53,8 @@ The two links imports **all required artifacts** in two steps:
 
 ## 4 · Configuration steps (after import)
 
+** YOU CAN FIND THE AWS CONFIGURATION IN THE FIRST SCRIPT TASK **
+
 1. **Email connectors** (Inbound & Send):
    * **Username** → `your-address@example.com`
    * **IMAP/SMTP host & port** → according to your provider (Gmail, Outlook, custom, …)
