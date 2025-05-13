@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="0aba732" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="1e1176c" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <bpmn:process id="Process_0j5qzil" name="Agent Blueprint (Long Term Memory)" isExecutable="true">
     <bpmn:exclusiveGateway id="Gateway_1k7euae" name="action needed?">
       <bpmn:incoming>Flow_1imcl82</bpmn:incoming>
@@ -38,8 +38,8 @@
           <zeebe:taskDefinition type="io.camunda:email:1" retries="3" />
           <zeebe:ioMapping>
             <zeebe:input source="simple" target="authentication.type" />
-            <zeebe:input source="your-adress@gmail.com" target="authentication.username" />
-            <zeebe:input source="{{secrets.CAMUNDA_SAMPLE_AGENT_GMAIL}}" target="authentication.password" />
+            <zeebe:input source="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_USERNAME}}" target="authentication.username" />
+            <zeebe:input source="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_PASSWORD}}" target="authentication.password" />
             <zeebe:input source="smtp" target="protocol" />
             <zeebe:input source="smtp.gmail.com" target="data.smtpConfig.smtpHost" />
             <zeebe:input source="=587" target="data.smtpConfig.smtpPort" />
@@ -64,8 +64,8 @@
           <zeebe:properties>
             <zeebe:property name="inbound.type" value="io.camunda:connector-email-inbound:1" />
             <zeebe:property name="authentication.type" value="simple" />
-            <zeebe:property name="authentication.username" value="your-adress@gmail.com" />
-            <zeebe:property name="authentication.password" value="{{secrets.CCON_KEYNOTE_AGENT_GMAIL}}" />
+            <zeebe:property name="authentication.username" value="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_USERNAME}}" />
+            <zeebe:property name="authentication.password" value="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_PASSWORD}}" />
             <zeebe:property name="data.imapConfig.imapHost" value="imap.gmail.com" />
             <zeebe:property name="data.imapConfig.imapPort" value="993" />
             <zeebe:property name="data.imapConfig.imapCryptographicProtocol" value="TLS" />
@@ -144,7 +144,7 @@
             <zeebe:input source="=5" target="vectorDatabaseConnectorOperation.documentLimit" />
             <zeebe:input source="BEDROCK_MODEL_PROVIDER" target="embeddingModelProvider.modelProvider" />
             <zeebe:input source="{{secrets.CAMUNDAAGENT_AWS_ACCESS_KEY}}" target="embeddingModelProvider.accessKey" />
-            <zeebe:input source="{{secrets.MATHIEU_AWS_SECRET_KEY}}" target="embeddingModelProvider.secretKey" />
+            <zeebe:input source="{{secrets.CAMUNDAAGENT_AWS_SECRET_KEY}}" target="embeddingModelProvider.secretKey" />
             <zeebe:input source="=aws_configuration.region" target="embeddingModelProvider.region" />
             <zeebe:input source="TitanEmbedTextV2" target="embeddingModelProvider.modelName" />
             <zeebe:input source="D1024" target="embeddingModelProvider.dimensions" />
@@ -402,8 +402,8 @@
         <zeebe:taskDefinition type="io.camunda:email:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="simple" target="authentication.type" />
-          <zeebe:input source="your-adress@gmail.com" target="authentication.username" />
-          <zeebe:input source="{{secrets.CAMUNDA_SAMPLE_AGENT_GMAIL}}" target="authentication.password" />
+          <zeebe:input source="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_USERNAME}}" target="authentication.username" />
+          <zeebe:input source="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_PASSWORD}}" target="authentication.password" />
           <zeebe:input source="smtp" target="protocol" />
           <zeebe:input source="smtp.gmail.com" target="data.smtpConfig.smtpHost" />
           <zeebe:input source="=587" target="data.smtpConfig.smtpPort" />
@@ -486,8 +486,8 @@
         <zeebe:properties>
           <zeebe:property name="inbound.type" value="io.camunda:connector-email-inbound:1" />
           <zeebe:property name="authentication.type" value="simple" />
-          <zeebe:property name="authentication.username" value="your-adress@gmail.com" />
-          <zeebe:property name="authentication.password" value="{{secrets.CAMUNDA_SAMPLE_AGENT_GMAIL}}" />
+          <zeebe:property name="authentication.username" value="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_USERNAME}}" />
+          <zeebe:property name="authentication.password" value="{{secrets.CAMUNDA_SAMPLE_AGENT_EMAIL_PASSWORD}}" />
           <zeebe:property name="data.imapConfig.imapHost" value="imap.gmail.com" />
           <zeebe:property name="data.imapConfig.imapPort" value="993" />
           <zeebe:property name="data.imapConfig.imapCryptographicProtocol" value="TLS" />
@@ -510,7 +510,7 @@
     <bpmn:sequenceFlow id="Flow_0pe445y" sourceRef="Activity_0waqzte" targetRef="Activity_0kce977" />
     <bpmn:scriptTask id="Activity_0waqzte" name="aws configuration">
       <bpmn:extensionElements>
-        <zeebe:script expression="={&#10;  &#34;region&#34; : &#34;us-east-1&#34;,&#10;  &#34;longterm_memory_server_url&#34;:&#34;your-url&#34;&#10;}" resultVariable="aws_configuration" />
+        <zeebe:script expression="={&#10;  &#34;region&#34; : &#34;us-east-1&#34;,&#10;  &#34;longterm_memory_server_url&#34;:&#34;search-camundacon-25-ams-demo-bjbkeuqheayrnkjkkx2zys4hqm.aos.us-east-1.on.aws&#34;&#10;}" resultVariable="aws_configuration" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0fghmqt</bpmn:incoming>
       <bpmn:outgoing>Flow_0pe445y</bpmn:outgoing>
