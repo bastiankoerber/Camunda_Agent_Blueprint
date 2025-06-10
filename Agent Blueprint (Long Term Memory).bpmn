@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="6da4ea9" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.35.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <bpmn:process id="Process_0j5qzil" name="Agent Blueprint (Long Term Memory)" isExecutable="true">
     <bpmn:exclusiveGateway id="Gateway_1k7euae" name="action needed?">
       <bpmn:incoming>Flow_1imcl82</bpmn:incoming>
@@ -238,7 +238,7 @@
           <zeebe:input source="=aws_configuration.region" target="vectorStore.region" />
           <zeebe:input source="=&#34;conversation-knowledge-base-&#34; + currentEmail.fromAddress" target="vectorStore.indexName" />
           <zeebe:input source="PlainText" target="vectorDatabaseConnectorOperation.documentSource" />
-          <zeebe:input source="=agent.context.memory[-1].text" target="vectorDatabaseConnectorOperation.documentSourceFromProcessVariable" />
+          <zeebe:input source="=agent.responseText" target="vectorDatabaseConnectorOperation.documentSourceFromProcessVariable" />
           <zeebe:input source="DOCUMENT_SPLITTER_NONE" target="vectorDatabaseConnectorOperation.documentSplitter.splitterType" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -332,63 +332,66 @@
       <bpmn:incoming>Flow_0a79ens</bpmn:incoming>
       <bpmn:escalationEventDefinition id="EscalationEventDefinition_06njmsk" escalationRef="Escalation_1qaovql" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:serviceTask id="Activity_0hp732o" name="Agent as a Judge" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v0" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNBNTZFRkYiLz4KPG1hc2sgaWQ9InBhdGgtMi1vdXRzaWRlLTFfMTg1XzYiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9IjQiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iYmxhY2siPgo8cmVjdCBmaWxsPSJ3aGl0ZSIgeD0iNCIgeT0iNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIvPgo8L21hc2s+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIgZmlsbD0id2hpdGUiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMC4wMTA1IDEyLjA5ODdDMTguNDkgMTAuNTg5NCAxNy4xNTk0IDguMTA4MTQgMTYuMTc5OSA2LjAxMTAzQzE2LjE1MiA2LjAwNDUxIDE2LjExNzYgNiAxNi4wNzk0IDZDMTYuMDQxMSA2IDE2LjAwNjYgNi4wMDQ1MSAxNS45Nzg4IDYuMDExMDRDMTQuOTk5NCA4LjEwODE0IDEzLjY2OTcgMTAuNTg4OSAxMi4xNDgxIDEyLjA5ODFDMTAuNjI2OSAxMy42MDcxIDguMTI1NjggMTQuOTI2NCA2LjAxMTU3IDE1Ljg5ODFDNi4wMDQ3NCAxNS45MjYxIDYgMTUuOTYxMSA2IDE2QzYgMTYuMDM4NyA2LjAwNDY4IDE2LjA3MzYgNi4wMTE0NCAxNi4xMDE0QzguMTI1MTkgMTcuMDcyOSAxMC42MjYyIDE4LjM5MTkgMTIuMTQ3NyAxOS45MDE2QzEzLjY2OTcgMjEuNDEwNyAxNC45OTk2IDIzLjg5MiAxNS45NzkxIDI1Ljk4OUMxNi4wMDY4IDI1Ljk5NTYgMTYuMDQxMSAyNiAxNi4wNzkzIDI2QzE2LjExNzUgMjYgMTYuMTUxOSAyNS45OTU0IDE2LjE3OTYgMjUuOTg5QzE3LjE1OTEgMjMuODkyIDE4LjQ4ODggMjEuNDExIDIwLjAwOTkgMTkuOTAyMU0yMC4wMDk5IDE5LjkwMjFDMjEuNTI1MyAxOC4zOTg3IDIzLjk0NjUgMTcuMDY2OSAyNS45OTE1IDE2LjA4MjRDMjUuOTk2NSAxNi4wNTkzIDI2IDE2LjAzMSAyNiAxNS45OTk3QzI2IDE1Ljk2ODQgMjUuOTk2NSAxNS45NDAzIDI1Ljk5MTUgMTUuOTE3MUMyMy45NDc0IDE0LjkzMjcgMjEuNTI1OSAxMy42MDEgMjAuMDEwNSAxMi4wOTg3IiBzdHJva2U9IiM0OTFEOEIiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgbWFzaz0idXJsKCNwYXRoLTItb3V0c2lkZS0xXzE4NV82KSIvPgo8L3N2Zz4K">
+    <bpmn:serviceTask id="Activity_0hp732o" name="Agent as a Judge" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNBNTZFRkYiLz4KPG1hc2sgaWQ9InBhdGgtMi1vdXRzaWRlLTFfMTg1XzYiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9IjQiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iYmxhY2siPgo8cmVjdCBmaWxsPSJ3aGl0ZSIgeD0iNCIgeT0iNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIvPgo8L21hc2s+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIgZmlsbD0id2hpdGUiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMC4wMTA1IDEyLjA5ODdDMTguNDkgMTAuNTg5NCAxNy4xNTk0IDguMTA4MTQgMTYuMTc5OSA2LjAxMTAzQzE2LjE1MiA2LjAwNDUxIDE2LjExNzYgNiAxNi4wNzk0IDZDMTYuMDQxMSA2IDE2LjAwNjYgNi4wMDQ1MSAxNS45Nzg4IDYuMDExMDRDMTQuOTk5NCA4LjEwODE0IDEzLjY2OTcgMTAuNTg4OSAxMi4xNDgxIDEyLjA5ODFDMTAuNjI2OSAxMy42MDcxIDguMTI1NjggMTQuOTI2NCA2LjAxMTU3IDE1Ljg5ODFDNi4wMDQ3NCAxNS45MjYxIDYgMTUuOTYxMSA2IDE2QzYgMTYuMDM4NyA2LjAwNDY4IDE2LjA3MzYgNi4wMTE0NCAxNi4xMDE0QzguMTI1MTkgMTcuMDcyOSAxMC42MjYyIDE4LjM5MTkgMTIuMTQ3NyAxOS45MDE2QzEzLjY2OTcgMjEuNDEwNyAxNC45OTk2IDIzLjg5MiAxNS45NzkxIDI1Ljk4OUMxNi4wMDY4IDI1Ljk5NTYgMTYuMDQxMSAyNiAxNi4wNzkzIDI2QzE2LjExNzUgMjYgMTYuMTUxOSAyNS45OTU0IDE2LjE3OTYgMjUuOTg5QzE3LjE1OTEgMjMuODkyIDE4LjQ4ODggMjEuNDExIDIwLjAwOTkgMTkuOTAyMU0yMC4wMDk5IDE5LjkwMjFDMjEuNTI1MyAxOC4zOTg3IDIzLjk0NjUgMTcuMDY2OSAyNS45OTE1IDE2LjA4MjRDMjUuOTk2NSAxNi4wNTkzIDI2IDE2LjAzMSAyNiAxNS45OTk3QzI2IDE1Ljk2ODQgMjUuOTk2NSAxNS45NDAzIDI1Ljk5MTUgMTUuOTE3MUMyMy45NDc0IDE0LjkzMjcgMjEuNTI1OSAxMy42MDEgMjAuMDEwNSAxMi4wOTg3IiBzdHJva2U9IiM0OTFEOEIiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgbWFzaz0idXJsKCNwYXRoLTItb3V0c2lkZS0xXzE4NV82KSIvPgo8L3N2Zz4K">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:0" retries="3" />
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="bedrock" target="provider.type" />
           <zeebe:input source="us-east-1" target="provider.bedrock.region" />
-          <zeebe:input source="anthropic.claude-3-5-sonnet-20240620-v1:0" target="provider.bedrock.model.model" />
           <zeebe:input source="credentials" target="provider.bedrock.authentication.type" />
           <zeebe:input source="{{secrets.CAMUNDAAGENT_AWS_ACCESS_KEY}}" target="provider.bedrock.authentication.accessKey" />
           <zeebe:input source="{{secrets.CAMUNDAAGENT_AWS_SECRET_KEY}}" target="provider.bedrock.authentication.secretKey" />
-          <zeebe:input source="=llmjudge.context" target="data.context" />
-          <zeebe:input source="You are Agent Performance Evaluator for Camunda Bank’s LoanSupportAgent conversations.&#10;&#10;Your single task:&#10;After reading the customer ↔ agent exchange, decide whether the agent’s handling was optimal, sub-optimal, or required human intervention, then output one—and only one—JSON object that matches the schema and key order exactly as shown below.&#10;&#10;Evaluation Criteria&#10;Domain-Scope Compliance&#10;&#10;Tool-Usage Effectiveness&#10;&#10;Chain-of-Thought Quality&#10;&#10;Satisfaction Confirmation &#38; Resolution&#10;&#10;Regulatory &#38; Privacy Compliance&#10;&#10;(Detailed bullet points are unchanged from the prior version.)&#10;&#10;Evaluation Decision Logic&#10;Choose exactly one of:&#10;&#10;AGENT_SUCCESS&#10;&#10;AGENT_SUBOPTIMAL&#10;&#10;HUMAN_INTERVENTION_REQUIRED&#10;&#10;STRICT Output Format (MANDATORY)&#10;Return a single JSON object—nothing else—with this exact key order:&#10;&#10;{&#10;&#34;decision&#34;: &#34;AGENT_SUCCESS | AGENT_SUBOPTIMAL | HUMAN_INTERVENTION_REQUIRED&#34;,&#10;&#34;reasoning&#34;: &#34;brief rationale (2–3 sentences)&#34;,&#10;&#34;reasoning_quality&#34;: &#34;comment on the depth/clarity of the agent’s reasoning&#34;,&#10;&#34;identified_issues&#34;: &#34;list significant flaws or state &#34;None&#34;&#34;,&#10;&#34;customer_email&#34;: &#34;concise follow-up email text if the case closed successfully, else empty string&#34;&#10;}&#10;&#10;Enforcement Rules&#10;No extra or missing top-level keys.&#10;&#10;Key order must be exactly as above.&#10;&#10;The &#34;decision&#34; value must be one of the three literals—spelled exactly.&#10;&#10;Do NOT wrap the JSON in code-fences, markdown, or comments.&#10;&#10;If you cannot comply for any reason, output the single string ERROR (no JSON).&#10;&#10;Important: The conversation transcript may include an additional “system” prompt labeled as input memory—ignore it completely and evaluate only the customer ↔ agent exchange.&#10;&#10;Failure to follow any rule is itself an error." target="data.systemPrompt.prompt" />
-          <zeebe:input source="=&#34;input memory:&#34;  + string join(&#10;  sublist(agent.context.memory.text, 2, count(agent.context.memory.text)- 1),&#10;  &#34;\n&#34;&#10;)" target="data.userPrompt.prompt" />
-          <zeebe:input source="=JudgetoolResults" target="data.tools.toolCallResults" />
-          <zeebe:input source="=20" target="data.memory.maxMessages" />
-          <zeebe:input source="=10" target="data.guardrails.maxModelCalls" />
-          <zeebe:input source="=5000" target="provider.bedrock.model.parameters.maxOutputTokens" />
+          <zeebe:input source="anthropic.claude-3-5-sonnet-20240620-v1:0" target="provider.bedrock.model.model" />
+          <zeebe:input source="=5000" target="provider.bedrock.model.parameters.maxTokens" />
           <zeebe:input source="=0.2" target="provider.bedrock.model.parameters.temperature" />
           <zeebe:input source="=0.1" target="provider.bedrock.model.parameters.topP" />
+          <zeebe:input source="You are Agent Performance Evaluator for Camunda Bank’s LoanSupportAgent conversations.&#10;&#10;Your single task:&#10;After reading the customer ↔ agent exchange, decide whether the agent’s handling was optimal, sub-optimal, or required human intervention, then output one—and only one—JSON object that matches the schema and key order exactly as shown below.&#10;&#10;Evaluation Criteria&#10;Domain-Scope Compliance&#10;&#10;Tool-Usage Effectiveness&#10;&#10;Chain-of-Thought Quality&#10;&#10;Satisfaction Confirmation &#38; Resolution&#10;&#10;Regulatory &#38; Privacy Compliance&#10;&#10;(Detailed bullet points are unchanged from the prior version.)&#10;&#10;Evaluation Decision Logic&#10;Choose exactly one of:&#10;&#10;AGENT_SUCCESS&#10;&#10;AGENT_SUBOPTIMAL&#10;&#10;HUMAN_INTERVENTION_REQUIRED&#10;&#10;STRICT Output Format (MANDATORY)&#10;Return a single JSON object—nothing else—with this exact key order:&#10;&#10;{&#10;&#34;decision&#34;: &#34;AGENT_SUCCESS | AGENT_SUBOPTIMAL | HUMAN_INTERVENTION_REQUIRED&#34;,&#10;&#34;reasoning&#34;: &#34;brief rationale (2–3 sentences)&#34;,&#10;&#34;reasoning_quality&#34;: &#34;comment on the depth/clarity of the agent’s reasoning&#34;,&#10;&#34;identified_issues&#34;: &#34;list significant flaws or state &#34;None&#34;&#34;,&#10;&#34;customer_email&#34;: &#34;concise follow-up email text if the case closed successfully, else empty string&#34;&#10;}&#10;&#10;Enforcement Rules&#10;No extra or missing top-level keys.&#10;&#10;Key order must be exactly as above.&#10;&#10;The &#34;decision&#34; value must be one of the three literals—spelled exactly.&#10;&#10;Do NOT wrap the JSON in code-fences, markdown, or comments.&#10;&#10;If you cannot comply for any reason, output the single string ERROR (no JSON).&#10;&#10;Important: The conversation transcript may include an additional “system” prompt labeled as input memory—ignore it completely and evaluate only the customer ↔ agent exchange.&#10;&#10;Failure to follow any rule is itself an error." target="data.systemPrompt.prompt" />
+          <zeebe:input source="=&#34;input memory:\n&#34; + string join(for message in agent.context.conversation.messages[role = &#34;user&#34; or role = &#34;assistant&#34;] return upper case(message.role) + &#34;:\n&#34; + string join(message.content.text, &#34;\n&#34;) + &#34;\n&#34;, &#34;\n&#34;)" target="data.userPrompt.prompt" />
+          <zeebe:input source="=llmjudge.context" target="data.context" />
+          <zeebe:input source="=20" target="data.memory.maxMessages" />
+          <zeebe:input source="=10" target="data.limits.maxModelCalls" />
+          <zeebe:input source="=true" target="data.response.includeText" />
+          <zeebe:input source="=false" target="data.response.includeAssistantMessage" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.agenticai.aiagent.v0" />
+          <zeebe:header key="elementTemplateVersion" value="1" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.agenticai.aiagent.v1" />
           <zeebe:header key="resultVariable" value="llmjudge" />
-          <zeebe:header key="resultExpression" value="={&#10;  &#34;decision&#34;: substring before(substring after(response.chatResponse.text, &#34;\&#34;decision\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;reasoning&#34;: substring before(substring after(response.chatResponse.text, &#34;\&#34;reasoning\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;reasoning_quality&#34;: substring before(substring after(response.chatResponse.text, &#34;\&#34;reasoning_quality\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;identified_issues&#34;: substring before(substring after(response.chatResponse.text, &#34;\&#34;identified_issues\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;customer_email&#34;: substring before(substring after(response.chatResponse.text, &#34;\&#34;customer_email\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;)&#10;}" />
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;decision&#34;: substring before(substring after(response.responseText, &#34;\&#34;decision\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;reasoning&#34;: substring before(substring after(response.responseText, &#34;\&#34;reasoning\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;reasoning_quality&#34;: substring before(substring after(response.responseText, &#34;\&#34;reasoning_quality\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;identified_issues&#34;: substring before(substring after(response.responseText, &#34;\&#34;identified_issues\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;),&#10;  &#34;customer_email&#34;: substring before(substring after(response.responseText, &#34;\&#34;customer_email\&#34;: \&#34;&#34;), &#34;\&#34;,&#34;)&#10;}" />
           <zeebe:header key="retryBackoff" value="PT0S" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0dqug0r</bpmn:incoming>
       <bpmn:outgoing>Flow_1ocsi68</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_01xvqn0" name="Handle customer request" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v0" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNBNTZFRkYiLz4KPG1hc2sgaWQ9InBhdGgtMi1vdXRzaWRlLTFfMTg1XzYiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9IjQiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iYmxhY2siPgo8cmVjdCBmaWxsPSJ3aGl0ZSIgeD0iNCIgeT0iNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIvPgo8L21hc2s+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIgZmlsbD0id2hpdGUiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMC4wMTA1IDEyLjA5ODdDMTguNDkgMTAuNTg5NCAxNy4xNTk0IDguMTA4MTQgMTYuMTc5OSA2LjAxMTAzQzE2LjE1MiA2LjAwNDUxIDE2LjExNzYgNiAxNi4wNzk0IDZDMTYuMDQxMSA2IDE2LjAwNjYgNi4wMDQ1MSAxNS45Nzg4IDYuMDExMDRDMTQuOTk5NCA4LjEwODE0IDEzLjY2OTcgMTAuNTg4OSAxMi4xNDgxIDEyLjA5ODFDMTAuNjI2OSAxMy42MDcxIDguMTI1NjggMTQuOTI2NCA2LjAxMTU3IDE1Ljg5ODFDNi4wMDQ3NCAxNS45MjYxIDYgMTUuOTYxMSA2IDE2QzYgMTYuMDM4NyA2LjAwNDY4IDE2LjA3MzYgNi4wMTE0NCAxNi4xMDE0QzguMTI1MTkgMTcuMDcyOSAxMC42MjYyIDE4LjM5MTkgMTIuMTQ3NyAxOS45MDE2QzEzLjY2OTcgMjEuNDEwNyAxNC45OTk2IDIzLjg5MiAxNS45NzkxIDI1Ljk4OUMxNi4wMDY4IDI1Ljk5NTYgMTYuMDQxMSAyNiAxNi4wNzkzIDI2QzE2LjExNzUgMjYgMTYuMTUxOSAyNS45OTU0IDE2LjE3OTYgMjUuOTg5QzE3LjE1OTEgMjMuODkyIDE4LjQ4ODggMjEuNDExIDIwLjAwOTkgMTkuOTAyMU0yMC4wMDk5IDE5LjkwMjFDMjEuNTI1MyAxOC4zOTg3IDIzLjk0NjUgMTcuMDY2OSAyNS45OTE1IDE2LjA4MjRDMjUuOTk2NSAxNi4wNTkzIDI2IDE2LjAzMSAyNiAxNS45OTk3QzI2IDE1Ljk2ODQgMjUuOTk2NSAxNS45NDAzIDI1Ljk5MTUgMTUuOTE3MUMyMy45NDc0IDE0LjkzMjcgMjEuNTI1OSAxMy42MDEgMjAuMDEwNSAxMi4wOTg3IiBzdHJva2U9IiM0OTFEOEIiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgbWFzaz0idXJsKCNwYXRoLTItb3V0c2lkZS0xXzE4NV82KSIvPgo8L3N2Zz4K">
+    <bpmn:serviceTask id="Activity_01xvqn0" name="Handle customer request" zeebe:modelerTemplate="io.camunda.connectors.agenticai.aiagent.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNBNTZFRkYiLz4KPG1hc2sgaWQ9InBhdGgtMi1vdXRzaWRlLTFfMTg1XzYiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9IjQiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iYmxhY2siPgo8cmVjdCBmaWxsPSJ3aGl0ZSIgeD0iNCIgeT0iNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIvPgo8L21hc2s+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjAuMDEwNSAxMi4wOTg3QzE4LjQ5IDEwLjU4OTQgMTcuMTU5NCA4LjEwODE0IDE2LjE3OTkgNi4wMTEwM0MxNi4xNTIgNi4wMDQ1MSAxNi4xMTc2IDYgMTYuMDc5NCA2QzE2LjA0MTEgNiAxNi4wMDY2IDYuMDA0NTEgMTUuOTc4OCA2LjAxMTA0QzE0Ljk5OTQgOC4xMDgxNCAxMy42Njk3IDEwLjU4ODkgMTIuMTQ4MSAxMi4wOTgxQzEwLjYyNjkgMTMuNjA3MSA4LjEyNTY4IDE0LjkyNjQgNi4wMTE1NyAxNS44OTgxQzYuMDA0NzQgMTUuOTI2MSA2IDE1Ljk2MTEgNiAxNkM2IDE2LjAzODcgNi4wMDQ2OCAxNi4wNzM2IDYuMDExNDQgMTYuMTAxNEM4LjEyNTE5IDE3LjA3MjkgMTAuNjI2MiAxOC4zOTE5IDEyLjE0NzcgMTkuOTAxNkMxMy42Njk3IDIxLjQxMDcgMTQuOTk5NiAyMy44OTIgMTUuOTc5MSAyNS45ODlDMTYuMDA2OCAyNS45OTU2IDE2LjA0MTEgMjYgMTYuMDc5MyAyNkMxNi4xMTc1IDI2IDE2LjE1MTkgMjUuOTk1NCAxNi4xNzk2IDI1Ljk4OUMxNy4xNTkxIDIzLjg5MiAxOC40ODg4IDIxLjQxMSAyMC4wMDk5IDE5LjkwMjFNMjAuMDA5OSAxOS45MDIxQzIxLjUyNTMgMTguMzk4NyAyMy45NDY1IDE3LjA2NjkgMjUuOTkxNSAxNi4wODI0QzI1Ljk5NjUgMTYuMDU5MyAyNiAxNi4wMzEgMjYgMTUuOTk5N0MyNiAxNS45Njg0IDI1Ljk5NjUgMTUuOTQwMyAyNS45OTE1IDE1LjkxNzFDMjMuOTQ3NCAxNC45MzI3IDIxLjUyNTkgMTMuNjAxIDIwLjAxMDUgMTIuMDk4NyIgZmlsbD0id2hpdGUiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMC4wMTA1IDEyLjA5ODdDMTguNDkgMTAuNTg5NCAxNy4xNTk0IDguMTA4MTQgMTYuMTc5OSA2LjAxMTAzQzE2LjE1MiA2LjAwNDUxIDE2LjExNzYgNiAxNi4wNzk0IDZDMTYuMDQxMSA2IDE2LjAwNjYgNi4wMDQ1MSAxNS45Nzg4IDYuMDExMDRDMTQuOTk5NCA4LjEwODE0IDEzLjY2OTcgMTAuNTg4OSAxMi4xNDgxIDEyLjA5ODFDMTAuNjI2OSAxMy42MDcxIDguMTI1NjggMTQuOTI2NCA2LjAxMTU3IDE1Ljg5ODFDNi4wMDQ3NCAxNS45MjYxIDYgMTUuOTYxMSA2IDE2QzYgMTYuMDM4NyA2LjAwNDY4IDE2LjA3MzYgNi4wMTE0NCAxNi4xMDE0QzguMTI1MTkgMTcuMDcyOSAxMC42MjYyIDE4LjM5MTkgMTIuMTQ3NyAxOS45MDE2QzEzLjY2OTcgMjEuNDEwNyAxNC45OTk2IDIzLjg5MiAxNS45NzkxIDI1Ljk4OUMxNi4wMDY4IDI1Ljk5NTYgMTYuMDQxMSAyNiAxNi4wNzkzIDI2QzE2LjExNzUgMjYgMTYuMTUxOSAyNS45OTU0IDE2LjE3OTYgMjUuOTg5QzE3LjE1OTEgMjMuODkyIDE4LjQ4ODggMjEuNDExIDIwLjAwOTkgMTkuOTAyMU0yMC4wMDk5IDE5LjkwMjFDMjEuNTI1MyAxOC4zOTg3IDIzLjk0NjUgMTcuMDY2OSAyNS45OTE1IDE2LjA4MjRDMjUuOTk2NSAxNi4wNTkzIDI2IDE2LjAzMSAyNiAxNS45OTk3QzI2IDE1Ljk2ODQgMjUuOTk2NSAxNS45NDAzIDI1Ljk5MTUgMTUuOTE3MUMyMy45NDc0IDE0LjkzMjcgMjEuNTI1OSAxMy42MDEgMjAuMDEwNSAxMi4wOTg3IiBzdHJva2U9IiM0OTFEOEIiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgbWFzaz0idXJsKCNwYXRoLTItb3V0c2lkZS0xXzE4NV82KSIvPgo8L3N2Zz4K">
       <bpmn:documentation>The Agent (LLM based) - has access to vast knowledge and thinking capabilities that allow it to make decisions</bpmn:documentation>
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:0" retries="3" />
+        <zeebe:taskDefinition type="io.camunda.agenticai:aiagent:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="bedrock" target="provider.type" />
           <zeebe:input source="us-east-1" target="provider.bedrock.region" />
-          <zeebe:input source="us.anthropic.claude-3-7-sonnet-20250219-v1:0" target="provider.bedrock.model.model" />
           <zeebe:input source="credentials" target="provider.bedrock.authentication.type" />
           <zeebe:input source="{{secrets.CAMUNDAAGENT_AWS_ACCESS_KEY}}" target="provider.bedrock.authentication.accessKey" />
           <zeebe:input source="{{secrets.CAMUNDAAGENT_AWS_SECRET_KEY}}" target="provider.bedrock.authentication.secretKey" />
-          <zeebe:input source="=agent.context" target="data.context" />
+          <zeebe:input source="us.anthropic.claude-3-7-sonnet-20250219-v1:0" target="provider.bedrock.model.model" />
+          <zeebe:input source="=5000" target="provider.bedrock.model.parameters.maxTokens" />
+          <zeebe:input source="=0.2" target="provider.bedrock.model.parameters.temperature" />
+          <zeebe:input source="=0.1" target="provider.bedrock.model.parameters.topP" />
           <zeebe:input source="You are **LoanSupportAgent**, the dedicated banking-loan support assistant for Camunda Bank.  &#10;You handle **only** loan-related customer requests (applications, rates, status, repayment, payoff quotes, modifications, collateral, statements, and regulatory disclosures).  &#10;Any non-loan topic must be declined with an error as defined below.&#10;&#10;────────────────────────────────&#10;# 0. CONTEXT — WHO IS “USER”?&#10;────────────────────────────────&#10;• Every incoming user message is from a **customer**.  &#10;• Internal loan officers and compliance specialists communicate only through the expert-communication tool(s).&#10;&#10;────────────────────────────────&#10;# 1. STRICT LOAN-DOMAIN SCOPE&#10;────────────────────────────────&#10;• If the request is NOT about a banking loan, reply exactly with  &#10;  `ERROR: Out-of-scope (loan support only)` and stop.  &#10;• Otherwise proceed with the workflow below.&#10;&#10;────────────────────────────────&#10;# 2. MANDATORY TOOL-DRIVEN WORKFLOW&#10;────────────────────────────────&#10;For **every** in-scope customer request:&#10;&#10;1. **Inspect** the full list of available tools. Typical tools include, but are not limited to:  &#10;   • `Reply with email to customer` – Give an answer to the customer’s email&#10;   • `Query knowledge base` – Query knowledge base about a certain question. Use this when you need additional information about our oferring with regards to the customer enquiry. &#10;   • `Ask a specialist` – You didn&#39;t find an answer to the customer&#39;s question and you need assitance from a human colleague. You will be able to learn from that colleague and save answer in the knowledge base for future interactions.&#10;2. **Evaluate** each tool’s relevance and explain why you picked or not picked a specific tool. Include all available tools in &#60;reflection&#62; tag and explain why using a tool or not.&#10;3. **Invoke at least one relevant tool**  &#10;   • Call the same tool multiple times with different inputs if needed.  &#10;   • If no loan-specific tool fits, you **must**  &#10;     a. call a generic search / knowledge tool **or**  &#10;     b. escalate via `Ask a specialist`.  &#10;   • Only if the expert confirms that no tool can help may you answer from general knowledge.  &#10;   • Any choice to skip a potentially helpful tool must be justified inside `&#60;reflection&#62;`.  &#10;4. **Communication mandate**:  &#10;   • To gather information from the **customer**, call `Reply with email to customer`.  &#10;   • To seek guidance from an **expert**, call `Ask a specialist`.  &#10;5. **Never** invent or call tools that are not in the supplied list.  &#10;6. After exhausting every relevant tool—and expert escalation if required—if you still cannot help, reply exactly with  &#10;   `ERROR: Unable to resolve (explain)`&#10;&#10;────────────────────────────────&#10;# 3. REGULATORY &#38; PRIVACY RULES&#10;────────────────────────────────&#10;• Never disclose internal account notes or confidential data.  &#10;• Do not reveal PII unless authenticated and tool-permitted.  &#10;• If regulations require additional authentication, call `ask_customer` to obtain it.&#10;&#10;────────────────────────────────&#10;# 4. CHAIN-OF-THOUGHT FORMAT&#10;────────────────────────────────&#10;Wrap minimal, inspectable reasoning in *exactly* this XML template:&#10;&#10;&#60;thinking&#62;&#10;  &#60;context&#62;…briefly state the customer’s loan-related need and current state…&#60;/context&#62;&#10;  &#60;reflection&#62;…list candidate tools, justify which you will call next and why…&#60;/reflection&#62;&#10;&#60;/thinking&#62;&#10;&#10;Reveal **no** additional private reasoning outside these tags.&#10;&#10;────────────────────────────────&#10;# 5. SATISFACTION CONFIRMATION, FINAL EMAIL &#38; TASK RESOLUTION&#10;────────────────────────────────&#10;A. When you believe you have fulfilled the request, end your reply with:  &#10;   “Does this fully resolve your loan inquiry?”  &#10;B. If the customer answers positively (e.g. “yes”, “thanks, that helps”):  &#10;   1. **Immediately call** `send_email` with an appropriate subject and body summarizing the resolution.  &#10;   2. After that tool call, your *next* chat message must contain **only** a summary of this conversation and how it was fixed. This should not exceed 4000 characters.&#10;C. If the customer’s very next message already expresses satisfaction, do step B immediately.  &#10;&#10;────────────────────────────────&#10;# 6. Real world information&#10;────────────────────────────────&#10;Please adhere to the following rules regarding real-world information.&#10;&#10;**General Rule:** Do not invent or hallucinate addresses, phone numbers, or personal names. Only provide this type of information if it has been explicitly mentioned in our conversation context. If you are uncertain, state that you do not know the information.&#10;&#10;**Information Types to be specific about:**&#10;&#10;* Addresses (street address, city, region, postal code, country)&#10;* Phone numbers (including country and area codes)&#10;* Full names of individuals (first, middle, last)&#10;* Email addresses&#10;* Social media handles&#10;* Dates of birth&#10;* National identification numbers (e.g., Social Security Numbers, passport numbers)&#10;* Financial account numbers (e.g., bank account numbers, credit card numbers)&#10;* Medical information&#10;* Legal information&#10;&#10;**Instructions for Missing Information:**&#10;&#10;If a request requires a specific, current real-world piece of information from the list above that is not in our context, please indicate that you need to access external data or perform a search to provide accurate information. For example, say: &#34;I need to look that up&#34; or &#34;I cannot provide that information without searching.&#34;&#10;&#10;**Tool Use (if applicable):**&#10;&#10;If you have access to search tools or external databases, use them to find the most accurate and up-to-date information for any of the above information types that I haven&#39;t provided. If the information is not publicly available or cannot be found through your tools, state that you cannot provide it.&#10;&#10;**Example scenarios:**&#10;&#10;* **Acceptable:** &#34;The address you provided earlier was 123 Main Street.&#34;&#10;* **Acceptable:** &#34;To find the current address of the Eiffel Tower, I will need to search online.&#34;&#10;* **Unacceptable:** &#34;The address is 456 Fake Street, and the phone number is 555-1212.&#34; (Unless this was explicitly provided in the conversation)&#10;&#10;**Prioritization:**&#10;&#10;1.  Use information provided within the current conversation or prompt.&#10;2.  If the information is not present, and search capabilities are available, use them to find the required information.&#10;3.  If the information cannot be found through search or is not publicly available, state that you cannot provide it.&#10;────────────────────────────────&#10;# 7. CUSTOMER CONTEXTUAL INFORMATION FROM PAST CONVERSATIONS&#10;────────────────────────────────&#10;{{customerPreviousConversationContext}}" target="data.systemPrompt.prompt" />
           <zeebe:input source="={&#10;  &#34;customerPreviousConversationContext&#34;: if customerPreviousConversationContext = nil then &#34;&#34; else customerPreviousConversationContext&#10;}" target="data.systemPrompt.parameters" />
           <zeebe:input source="=currentEmail.plainTextBody" target="data.userPrompt.prompt" />
           <zeebe:input source="Activity_04glkkx" target="data.tools.containerElementId" />
           <zeebe:input source="=toolResults" target="data.tools.toolCallResults" />
+          <zeebe:input source="=agent.context" target="data.context" />
           <zeebe:input source="=20" target="data.memory.maxMessages" />
-          <zeebe:input source="=10" target="data.guardrails.maxModelCalls" />
-          <zeebe:input source="=5000" target="provider.bedrock.model.parameters.maxOutputTokens" />
-          <zeebe:input source="=0.2" target="provider.bedrock.model.parameters.temperature" />
-          <zeebe:input source="=0.1" target="provider.bedrock.model.parameters.topP" />
+          <zeebe:input source="=10" target="data.limits.maxModelCalls" />
+          <zeebe:input source="=true" target="data.response.includeText" />
+          <zeebe:input source="=false" target="data.response.includeAssistantMessage" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.agenticai.aiagent.v0" />
+          <zeebe:header key="elementTemplateVersion" value="1" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.agenticai.aiagent.v1" />
           <zeebe:header key="resultVariable" value="agent" />
           <zeebe:header key="retryBackoff" value="PT0S" />
         </zeebe:taskHeaders>
@@ -542,344 +545,344 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0j5qzil">
       <bpmndi:BPMNShape id="BPMNShape_1l0gxhp" bpmnElement="Gateway_1k7euae" isMarkerVisible="true">
-        <dc:Bounds x="1275" y="215" width="50" height="50" />
+        <dc:Bounds x="1485" y="215" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1263" y="191" width="76" height="14" />
+          <dc:Bounds x="1473" y="191" width="76" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_ProcessEnd_di" bpmnElement="Event_ProcessEnd">
-        <dc:Bounds x="2182" y="222" width="36" height="36" />
+        <dc:Bounds x="2392" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2157" y="266" width="87" height="27" />
+          <dc:Bounds x="2367" y="266" width="87" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1j0oz23_di" bpmnElement="Gateway_1j0oz23" isMarkerVisible="true">
-        <dc:Bounds x="495" y="215" width="50" height="50" />
+        <dc:Bounds x="705" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0icwfki_di" bpmnElement="Activity_04glkkx" isExpanded="true">
-        <dc:Bounds x="480" y="350" width="960" height="620" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0pn4ems_di" bpmnElement="Reply_with_email_to_customer">
-        <dc:Bounds x="525" y="390" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1r7dbg4_di" bpmnElement="Event_WaitForResponse">
-        <dc:Bounds x="677" y="412" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="645" y="456" width="90" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1338851_di" bpmnElement="Ask_a_specialist">
-        <dc:Bounds x="525" y="560" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_045jpsd_di" bpmnElement="Activity_062h34x">
-        <dc:Bounds x="915" y="560" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1c9umdq" bpmnElement="query_knowledge_base">
-        <dc:Bounds x="1175" y="560" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0wh5ha7_di" bpmnElement="Event_0wh5ha7">
-        <dc:Bounds x="1327" y="622" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1331" y="665" width="31" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1whb5u5_di" bpmnElement="Gateway_1whb5u5" isMarkerVisible="true">
-        <dc:Bounds x="790" y="575" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="774" y="545" width="82" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1wd6fel_di" bpmnElement="Event_1wd6fel">
-        <dc:Bounds x="1067" y="582" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1061" y="545" width="48" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0x6ayre" bpmnElement="Gateway_1g2difp" isMarkerVisible="true">
-        <dc:Bounds x="660" y="575" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="658" y="538" width="56" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fqmlp5_di" bpmnElement="Event_0xzg3s4" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="667" y="692" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="649" y="738" width="72" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0jmzwhr_di" bpmnElement="Event_0jmzwhr">
-        <dc:Bounds x="777" y="412" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="771" y="455" width="50" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0obdo5z" bpmnElement="Event_1wezv96">
-        <dc:Bounds x="1247" y="622" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1215" y="658" width="80" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0yjq5t1_di" bpmnElement="Flow_0yjq5t1">
-        <di:waypoint x="625" y="430" />
-        <di:waypoint x="677" y="430" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_11xrx39_di" bpmnElement="Flow_11xrx39">
-        <di:waypoint x="713" y="430" />
-        <di:waypoint x="777" y="430" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1aaxb1w_di" bpmnElement="Flow_1aaxb1w">
-        <di:waypoint x="625" y="600" />
-        <di:waypoint x="660" y="600" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1mudddl_di" bpmnElement="Flow_1mudddl">
-        <di:waypoint x="840" y="600" />
-        <di:waypoint x="915" y="600" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="869" y="582" width="18" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0j63wm9_di" bpmnElement="Flow_0j63wm9">
-        <di:waypoint x="1015" y="600" />
-        <di:waypoint x="1067" y="600" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0d4itte_di" bpmnElement="Flow_0d4itte">
-        <di:waypoint x="1283" y="640" />
-        <di:waypoint x="1327" y="640" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0acq6om_di" bpmnElement="Flow_0acq6om">
-        <di:waypoint x="710" y="600" />
-        <di:waypoint x="790" y="600" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="724" y="578" width="28" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lexqwn_di" bpmnElement="Flow_0lexqwn">
-        <di:waypoint x="815" y="625" />
-        <di:waypoint x="815" y="680" />
-        <di:waypoint x="1085" y="680" />
-        <di:waypoint x="1085" y="618" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="838" y="643" width="13" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0q6oul9_di" bpmnElement="Flow_0q6oul9">
-        <di:waypoint x="685" y="625" />
-        <di:waypoint x="685" y="692" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="692" y="652" width="46" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_1omte3n" bpmnElement="Activity_0tn95r9" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1410" y="200" width="100" height="80" />
+        <dc:Bounds x="1620" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1y1vn4t_di" bpmnElement="Activity_0kce977" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="260" y="200" width="100" height="80" />
+        <dc:Bounds x="470" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0rqvkub_di" bpmnElement="Activity_0sw5ued" isExpanded="true" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1580" y="540" width="448" height="180" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_10qjan1_di" bpmnElement="Event_1daac7o" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="1612" y="612" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1595" y="655" width="72" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1lf6juj_di" bpmnElement="Activity_0pyk6oo">
-        <dc:Bounds x="1750" y="590" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0pcdb7p_di" bpmnElement="Event_0pcdb7p">
-        <dc:Bounds x="1932" y="612" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1908" y="655" width="85" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1sjth1d_di" bpmnElement="Flow_1sjth1d">
-        <di:waypoint x="1648" y="630" />
-        <di:waypoint x="1750" y="630" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0kks6ca_di" bpmnElement="Flow_0kks6ca">
-        <di:waypoint x="1850" y="630" />
-        <di:waypoint x="1932" y="630" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_1lon2qv_di" bpmnElement="Activity_132636m">
-        <dc:Bounds x="1890" y="200" width="100" height="80" />
+        <dc:Bounds x="2100" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0ua9lj6_di" bpmnElement="Gateway_0ua9lj6" isMarkerVisible="true">
-        <dc:Bounds x="1715" y="215" width="50" height="50" />
+        <dc:Bounds x="1925" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1va155p_di" bpmnElement="Event_1jfz6dk" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="2182" y="350" width="36" height="36" />
+        <dc:Bounds x="2392" y="350" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2164" y="393" width="72" height="27" />
+          <dc:Bounds x="2374" y="393" width="72" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_12gbl24" bpmnElement="Activity_0hp732o" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="1570" y="200" width="100" height="80" />
+        <dc:Bounds x="1780" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1clcfsu_di" bpmnElement="Activity_01xvqn0" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="843" y="200" width="100" height="80" />
+        <dc:Bounds x="1053" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_11xj1kv" bpmnElement="Activity_0d9av47">
-        <dc:Bounds x="1890" y="58" width="100" height="80" />
+        <dc:Bounds x="2100" y="58" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0kp1fqr_di" bpmnElement="Gateway_0kp1fqr" isMarkerVisible="true">
-        <dc:Bounds x="395" y="215" width="50" height="50" />
+        <dc:Bounds x="605" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0mw9iyy_di" bpmnElement="Event_0mw9iyy">
-        <dc:Bounds x="2182" y="80" width="36" height="36" />
+        <dc:Bounds x="2392" y="80" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2170" y="123" width="61" height="14" />
+          <dc:Bounds x="2380" y="123" width="61" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1squlpg" bpmnElement="Activity_1647ldd">
-        <dc:Bounds x="2040" y="58" width="100" height="80" />
+        <dc:Bounds x="2250" y="58" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1kekryj_di" bpmnElement="Event_WaitForEmail">
-        <dc:Bounds x="-38" y="222" width="36" height="36" />
+        <dc:Bounds x="172" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="-59" y="266" width="78" height="27" />
+          <dc:Bounds x="151" y="266" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0v9uhlr_di" bpmnElement="Activity_0waqzte">
-        <dc:Bounds x="80" y="200" width="100" height="80" />
+        <dc:Bounds x="290" y="200" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0icwfki_di" bpmnElement="Activity_04glkkx" isExpanded="true">
+        <dc:Bounds x="690" y="350" width="960" height="620" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pn4ems_di" bpmnElement="Reply_with_email_to_customer">
+        <dc:Bounds x="735" y="390" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1r7dbg4_di" bpmnElement="Event_WaitForResponse">
+        <dc:Bounds x="887" y="412" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="855" y="456" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1338851_di" bpmnElement="Ask_a_specialist">
+        <dc:Bounds x="735" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_045jpsd_di" bpmnElement="Activity_062h34x">
+        <dc:Bounds x="1125" y="560" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1c9umdq" bpmnElement="query_knowledge_base">
+        <dc:Bounds x="1385" y="560" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0wh5ha7_di" bpmnElement="Event_0wh5ha7">
+        <dc:Bounds x="1537" y="622" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1541" y="665" width="31" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1whb5u5_di" bpmnElement="Gateway_1whb5u5" isMarkerVisible="true">
+        <dc:Bounds x="1000" y="575" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="984" y="545" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1wd6fel_di" bpmnElement="Event_1wd6fel">
+        <dc:Bounds x="1277" y="582" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1271" y="545" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0x6ayre" bpmnElement="Gateway_1g2difp" isMarkerVisible="true">
+        <dc:Bounds x="870" y="575" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="868" y="538" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fqmlp5_di" bpmnElement="Event_0xzg3s4" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="877" y="692" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="859" y="738" width="72" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jmzwhr_di" bpmnElement="Event_0jmzwhr">
+        <dc:Bounds x="987" y="412" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="981" y="455" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0obdo5z" bpmnElement="Event_1wezv96">
+        <dc:Bounds x="1457" y="622" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1425" y="658" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0yjq5t1_di" bpmnElement="Flow_0yjq5t1">
+        <di:waypoint x="835" y="430" />
+        <di:waypoint x="887" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11xrx39_di" bpmnElement="Flow_11xrx39">
+        <di:waypoint x="923" y="430" />
+        <di:waypoint x="987" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1aaxb1w_di" bpmnElement="Flow_1aaxb1w">
+        <di:waypoint x="835" y="600" />
+        <di:waypoint x="870" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mudddl_di" bpmnElement="Flow_1mudddl">
+        <di:waypoint x="1050" y="600" />
+        <di:waypoint x="1125" y="600" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1079" y="582" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j63wm9_di" bpmnElement="Flow_0j63wm9">
+        <di:waypoint x="1225" y="600" />
+        <di:waypoint x="1277" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d4itte_di" bpmnElement="Flow_0d4itte">
+        <di:waypoint x="1493" y="640" />
+        <di:waypoint x="1537" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0acq6om_di" bpmnElement="Flow_0acq6om">
+        <di:waypoint x="920" y="600" />
+        <di:waypoint x="1000" y="600" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="934" y="578" width="28" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lexqwn_di" bpmnElement="Flow_0lexqwn">
+        <di:waypoint x="1025" y="625" />
+        <di:waypoint x="1025" y="680" />
+        <di:waypoint x="1295" y="680" />
+        <di:waypoint x="1295" y="618" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1048" y="643" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q6oul9_di" bpmnElement="Flow_0q6oul9">
+        <di:waypoint x="895" y="625" />
+        <di:waypoint x="895" y="692" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="902" y="652" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0rqvkub_di" bpmnElement="Activity_0sw5ued" isExpanded="true" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1790" y="540" width="448" height="180" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10qjan1_di" bpmnElement="Event_1daac7o" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="1822" y="612" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1805" y="655" width="72" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1lf6juj_di" bpmnElement="Activity_0pyk6oo">
+        <dc:Bounds x="1960" y="590" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0pcdb7p_di" bpmnElement="Event_0pcdb7p">
+        <dc:Bounds x="2142" y="612" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2118" y="655" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1sjth1d_di" bpmnElement="Flow_1sjth1d">
+        <di:waypoint x="1858" y="630" />
+        <di:waypoint x="1960" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kks6ca_di" bpmnElement="Flow_0kks6ca">
+        <di:waypoint x="2060" y="630" />
+        <di:waypoint x="2142" y="630" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0p70jxz_di" bpmnElement="Association_0p70jxz">
+        <di:waypoint x="1708" y="200" />
+        <di:waypoint x="1745" y="161" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1h2tjie_di" bpmnElement="Association_1h2tjie">
+        <di:waypoint x="558" y="200" />
+        <di:waypoint x="595" y="161" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0p2ywpv_di" bpmnElement="Association_0p2ywpv">
+        <di:waypoint x="1113" y="200" />
+        <di:waypoint x="1122" y="162" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0fquesm_di" bpmnElement="Event_0fquesm">
+        <dc:Bounds x="532" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="546" y="330" width="68" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0oibtxl_di" bpmnElement="TextAnnotation_0oibtxl">
-        <dc:Bounds x="900" y="121" width="200" height="41" />
+        <dc:Bounds x="1110" y="121" width="200" height="41" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_00q3d45_di" bpmnElement="TextAnnotation_00q3d45">
-        <dc:Bounds x="360" y="120" width="100" height="41" />
+        <dc:Bounds x="570" y="120" width="100" height="41" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0fpqtvh_di" bpmnElement="TextAnnotation_0fpqtvh">
-        <dc:Bounds x="1510" y="120" width="100" height="41" />
+        <dc:Bounds x="1720" y="120" width="100" height="41" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0fquesm_di" bpmnElement="Event_0fquesm">
-        <dc:Bounds x="322" y="262" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="336" y="330" width="68" height="40" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_06wqta8" bpmnElement="Flow_1imcl82">
-        <di:waypoint x="943" y="240" />
-        <di:waypoint x="1275" y="240" />
+        <di:waypoint x="1153" y="240" />
+        <di:waypoint x="1485" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
-        <di:waypoint x="1300" y="265" />
-        <di:waypoint x="1300" y="350" />
+        <di:waypoint x="1510" y="265" />
+        <di:waypoint x="1510" y="350" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1311" y="273" width="18" height="14" />
+          <dc:Bounds x="1521" y="273" width="18" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_105bcld_di" bpmnElement="Flow_105bcld">
-        <di:waypoint x="1325" y="240" />
-        <di:waypoint x="1410" y="240" />
+        <di:waypoint x="1535" y="240" />
+        <di:waypoint x="1620" y="240" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1339" y="222" width="13" height="14" />
+          <dc:Bounds x="1549" y="222" width="13" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0v6pwqf_di" bpmnElement="Flow_0v6pwqf">
-        <di:waypoint x="1990" y="240" />
-        <di:waypoint x="2182" y="240" />
+        <di:waypoint x="2200" y="240" />
+        <di:waypoint x="2392" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jfjd7m_di" bpmnElement="Flow_1jfjd7m">
-        <di:waypoint x="520" y="350" />
-        <di:waypoint x="520" y="265" />
+        <di:waypoint x="730" y="350" />
+        <di:waypoint x="730" y="265" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="771" y="-353" width="77" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04nch0z_di" bpmnElement="Flow_04nch0z">
-        <di:waypoint x="445" y="240" />
-        <di:waypoint x="495" y="240" />
+        <di:waypoint x="655" y="240" />
+        <di:waypoint x="705" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0l610js_di" bpmnElement="Flow_0l610js">
-        <di:waypoint x="545" y="240" />
-        <di:waypoint x="843" y="240" />
+        <di:waypoint x="755" y="240" />
+        <di:waypoint x="1053" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dqug0r_di" bpmnElement="Flow_0dqug0r">
-        <di:waypoint x="1510" y="240" />
-        <di:waypoint x="1570" y="240" />
+        <di:waypoint x="1720" y="240" />
+        <di:waypoint x="1780" y="240" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0fghmqt_di" bpmnElement="Flow_0fghmqt">
-        <di:waypoint x="-2" y="240" />
-        <di:waypoint x="80" y="240" />
+      <bpmndi:BPMNEdge id="Flow_0pe445y_di" bpmnElement="Flow_0pe445y">
+        <di:waypoint x="390" y="240" />
+        <di:waypoint x="470" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0coeih9_di" bpmnElement="Flow_0coeih9">
-        <di:waypoint x="360" y="240" />
-        <di:waypoint x="395" y="240" />
+        <di:waypoint x="570" y="240" />
+        <di:waypoint x="605" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nq27w0_di" bpmnElement="Flow_0nq27w0">
-        <di:waypoint x="1765" y="240" />
-        <di:waypoint x="1890" y="240" />
+        <di:waypoint x="1975" y="240" />
+        <di:waypoint x="2100" y="240" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1778" y="222" width="65" height="14" />
+          <dc:Bounds x="1988" y="222" width="65" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ocsi68_di" bpmnElement="Flow_1ocsi68">
-        <di:waypoint x="1670" y="240" />
-        <di:waypoint x="1715" y="240" />
+        <di:waypoint x="1880" y="240" />
+        <di:waypoint x="1925" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0a79ens_di" bpmnElement="Flow_0a79ens">
-        <di:waypoint x="1740" y="265" />
-        <di:waypoint x="1740" y="368" />
-        <di:waypoint x="2182" y="368" />
+        <di:waypoint x="1950" y="265" />
+        <di:waypoint x="1950" y="368" />
+        <di:waypoint x="2392" y="368" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1776" y="336" width="67" height="27" />
+          <dc:Bounds x="1986" y="336" width="67" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fh19mp_di" bpmnElement="Flow_0fh19mp">
-        <di:waypoint x="1740" y="215" />
-        <di:waypoint x="1740" y="98" />
-        <di:waypoint x="1890" y="98" />
+        <di:waypoint x="1950" y="215" />
+        <di:waypoint x="1950" y="98" />
+        <di:waypoint x="2100" y="98" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1776" y="106" width="55" height="27" />
+          <dc:Bounds x="1986" y="106" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08s0wt5_di" bpmnElement="Flow_08s0wt5">
-        <di:waypoint x="1990" y="98" />
-        <di:waypoint x="2040" y="98" />
+        <di:waypoint x="2200" y="98" />
+        <di:waypoint x="2250" y="98" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02rr1ty_di" bpmnElement="Flow_02rr1ty">
-        <di:waypoint x="340" y="298" />
-        <di:waypoint x="340" y="318" />
-        <di:waypoint x="420" y="318" />
-        <di:waypoint x="420" y="265" />
+        <di:waypoint x="550" y="298" />
+        <di:waypoint x="550" y="318" />
+        <di:waypoint x="630" y="318" />
+        <di:waypoint x="630" y="265" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d6n3x7_di" bpmnElement="Flow_0d6n3x7">
-        <di:waypoint x="2140" y="98" />
-        <di:waypoint x="2182" y="98" />
+        <di:waypoint x="2350" y="98" />
+        <di:waypoint x="2392" y="98" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pe445y_di" bpmnElement="Flow_0pe445y">
-        <di:waypoint x="180" y="240" />
-        <di:waypoint x="260" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0p2ywpv_di" bpmnElement="Association_0p2ywpv">
-        <di:waypoint x="903" y="200" />
-        <di:waypoint x="912" y="162" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1h2tjie_di" bpmnElement="Association_1h2tjie">
-        <di:waypoint x="348" y="200" />
-        <di:waypoint x="385" y="161" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0p70jxz_di" bpmnElement="Association_0p70jxz">
-        <di:waypoint x="1498" y="200" />
-        <di:waypoint x="1535" y="161" />
+      <bpmndi:BPMNEdge id="Flow_0fghmqt_di" bpmnElement="Flow_0fghmqt">
+        <di:waypoint x="208" y="240" />
+        <di:waypoint x="290" y="240" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -1,6 +1,6 @@
 # Camunda AI Email Support Blueprint (Alpha)
 
-> **Important ⚠️**  This blueprint targets **Camunda 8.8.0-alpha4** clusters (SaaS or Self-Managed).  The **Agent Connector**, **Vector Database Connector** used here are **alpha** components; breaking changes can occur between alpha releases.
+> **Important ⚠️**  This blueprint targets **Camunda 8.8.0-alpha5** clusters (SaaS or Self-Managed).  The **AI Agent Connector**, **Vector Database Connector** used here are **alpha** components; breaking changes can occur between alpha releases.
 
 A ready-to-import solution that demonstrates an AI-driven email conversation loop with:
 
@@ -12,42 +12,38 @@ A ready-to-import solution that demonstrates an AI-driven email conversation loo
 
 ---
 
-## 1 · two-click import  🡒  **Web Modeler link**
-
-[Download Connector](https://modeler.cloud.camunda.io/import/connectors?source=https://raw.githubusercontent.com/camunda/connectors/refs/heads/main/connectors/agentic-ai/element-templates/agenticai-aiagent-outbound-connector-8.8.0-alpha4.json,https://raw.githubusercontent.com/camunda/connectors/refs/heads/release/8.8/connectors/embeddings-vector-database/element-templates/embeddings-vector-database-outbound-connector.json)
+## 1 · one-click import  🡒  **Web Modeler link**
 
 [Download BPMN Files](https://modeler.cloud.camunda.io/import/processes?source=https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Agent%20Blueprint%20(Long%20Term%20Memory).bpmn,https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Escalate%20to%20human%20form.form,https://raw.githubusercontent.com/bastiankoerber/Camunda_Agent_Blueprint/refs/heads/main/Review%20case%20resolution.form)
 
-The two links imports **all required artifacts** in two steps:
+This link imports **all required artifacts** in two steps:
 
-| Artifact | Source |
-|----------|--------|
-| **BPMN** – `Agent%20Blueprint%20(Long%20Term%20Memory).bpmn` | this repository |
+| Artifact                                                              | Source          |
+|-----------------------------------------------------------------------|-----------------|
+| **BPMN** – `Agent%20Blueprint%20(Long%20Term%20Memory).bpmn`          | this repository |
 | **Forms** – `form-escalate-human.form`, `form-review-resolution.form` | this repository |
-| **Vector DB Connector template** | Camunda Connectors `release/8.8` branch |
-| **Agent Connector template** | *Camunda_Agent_Blueprint* `release/8.8` branch |
 
 ---
 
 ## 2 · Prerequisites
 
-| Requirement | Notes |
-|-------------|-------|
-| **Camunda 8.8 alpha4** cluster | Cloud SaaS or Self-Managed;|
-| Email account (SMTP/IMAP) & credentials | For Gmail use an App Password; for others use provider-specific credentials. |
-| AWS IAM user | Permissions: `bedrock:InvokeModel` (Claude 3 Sonnet/Haiku) and `aoss:*` for your OpenSearch index. |
-| Outbound internet access | Connectors must reach your email server, Bedrock, and OpenSearch endpoints. |
+| Requirement                             | Notes                                                                                              |
+|-----------------------------------------|----------------------------------------------------------------------------------------------------|
+| **Camunda 8.8.0-alpha5** cluster        | Cloud SaaS or Self-Managed;                                                                        |
+| Email account (SMTP/IMAP) & credentials | For Gmail use an App Password; for others use provider-specific credentials.                       |
+| AWS IAM user                            | Permissions: `bedrock:InvokeModel` (Claude 3 Sonnet/Haiku) and `aoss:*` for your OpenSearch index. |
+| Outbound internet access                | Connectors must reach your email server, Bedrock, and OpenSearch endpoints.                        |
 
 ---
 
 ## 3 · Secrets to create in the cluster
 
-| Secret key | Purpose |
-| ---------- | ------- |
-| `CAMUNDA_SAMPLE_AGENT_EMAIL_PASSWORD` | **Email account password** (App Password or SMTP token) |
+| Secret key                            | Purpose                                                      |
+|---------------------------------------|--------------------------------------------------------------|
+| `CAMUNDA_SAMPLE_AGENT_EMAIL_PASSWORD` | **Email account password** (App Password or SMTP token)      |
 | `CAMUNDA_SAMPLE_AGENT_EMAIL_USERNAME` | **Email account username** (e.g. `your-address@example.com`) |
-| `CAMUNDAAGENT_AWS_ACCESS_KEY` | AWS **Access Key ID** |
-| `CAMUNDAAGENT_AWS_SECRET_KEY` | AWS **Secret Access Key** |
+| `CAMUNDAAGENT_AWS_ACCESS_KEY`         | AWS **Access Key ID**                                        |
+| `CAMUNDAAGENT_AWS_SECRET_KEY`         | AWS **Secret Access Key**                                    |
 
 ---
 
@@ -75,8 +71,6 @@ blueprint/
 └── form-review-resolution.form
 README.md
 ```
-
-**Note** – All connector templates are pulled dynamically from external repositories; no connector JSON files live in this repo.
 
 ---
 
