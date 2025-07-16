@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.35.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.37.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <bpmn:process id="Process_0j5qzil" name="Agent Blueprint (Long Term Memory)" isExecutable="true">
     <bpmn:exclusiveGateway id="Gateway_1k7euae" name="action needed?">
       <bpmn:incoming>Flow_1imcl82</bpmn:incoming>
@@ -348,9 +348,11 @@
           <zeebe:input source="You are Agent Performance Evaluator for Camunda Bank’s LoanSupportAgent conversations.&#10;&#10;Your single task:&#10;After reading the customer ↔ agent exchange, decide whether the agent’s handling was optimal, sub-optimal, or required human intervention, then output one—and only one—JSON object that matches the schema and key order exactly as shown below.&#10;&#10;Evaluation Criteria&#10;Domain-Scope Compliance&#10;&#10;Tool-Usage Effectiveness&#10;&#10;Chain-of-Thought Quality&#10;&#10;Satisfaction Confirmation &#38; Resolution&#10;&#10;Regulatory &#38; Privacy Compliance&#10;&#10;(Detailed bullet points are unchanged from the prior version.)&#10;&#10;Evaluation Decision Logic&#10;Choose exactly one of:&#10;&#10;AGENT_SUCCESS&#10;&#10;AGENT_SUBOPTIMAL&#10;&#10;HUMAN_INTERVENTION_REQUIRED&#10;&#10;STRICT Output Format (MANDATORY)&#10;Return a single JSON object—nothing else—with this exact key order:&#10;&#10;{&#10;&#34;decision&#34;: &#34;AGENT_SUCCESS | AGENT_SUBOPTIMAL | HUMAN_INTERVENTION_REQUIRED&#34;,&#10;&#34;reasoning&#34;: &#34;brief rationale (2–3 sentences)&#34;,&#10;&#34;reasoning_quality&#34;: &#34;comment on the depth/clarity of the agent’s reasoning&#34;,&#10;&#34;identified_issues&#34;: &#34;list significant flaws or state &#34;None&#34;&#34;,&#10;&#34;customer_email&#34;: &#34;concise follow-up email text if the case closed successfully, else empty string&#34;&#10;}&#10;&#10;Enforcement Rules&#10;No extra or missing top-level keys.&#10;&#10;Key order must be exactly as above.&#10;&#10;The &#34;decision&#34; value must be one of the three literals—spelled exactly.&#10;&#10;Do NOT wrap the JSON in code-fences, markdown, or comments.&#10;&#10;If you cannot comply for any reason, output the single string ERROR (no JSON).&#10;&#10;Important: The conversation transcript may include an additional “system” prompt labeled as input memory—ignore it completely and evaluate only the customer ↔ agent exchange.&#10;&#10;Failure to follow any rule is itself an error." target="data.systemPrompt.prompt" />
           <zeebe:input source="=&#34;input memory:\n&#34; + string join(for message in agent.context.conversation.messages[role = &#34;user&#34; or role = &#34;assistant&#34;] return upper case(message.role) + &#34;:\n&#34; + string join(message.content.text, &#34;\n&#34;) + &#34;\n&#34;, &#34;\n&#34;)" target="data.userPrompt.prompt" />
           <zeebe:input source="=llmjudge.context" target="data.context" />
-          <zeebe:input source="=20" target="data.memory.maxMessages" />
+          <zeebe:input source="in-process" target="data.memory.storage.type" />
+          <zeebe:input source="=20" target="data.memory.contextWindowSize" />
           <zeebe:input source="=10" target="data.limits.maxModelCalls" />
-          <zeebe:input source="=true" target="data.response.includeText" />
+          <zeebe:input source="text" target="data.response.format.type" />
+          <zeebe:input source="=false" target="data.response.format.parseJson" />
           <zeebe:input source="=false" target="data.response.includeAssistantMessage" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -384,9 +386,11 @@
           <zeebe:input source="Activity_04glkkx" target="data.tools.containerElementId" />
           <zeebe:input source="=toolResults" target="data.tools.toolCallResults" />
           <zeebe:input source="=agent.context" target="data.context" />
-          <zeebe:input source="=20" target="data.memory.maxMessages" />
+          <zeebe:input source="in-process" target="data.memory.storage.type" />
+          <zeebe:input source="=20" target="data.memory.contextWindowSize" />
           <zeebe:input source="=10" target="data.limits.maxModelCalls" />
-          <zeebe:input source="=true" target="data.response.includeText" />
+          <zeebe:input source="text" target="data.response.format.type" />
+          <zeebe:input source="=false" target="data.response.format.parseJson" />
           <zeebe:input source="=false" target="data.response.includeAssistantMessage" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -559,62 +563,6 @@
       <bpmndi:BPMNShape id="Gateway_1j0oz23_di" bpmnElement="Gateway_1j0oz23" isMarkerVisible="true">
         <dc:Bounds x="705" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1omte3n" bpmnElement="Activity_0tn95r9" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1620" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1y1vn4t_di" bpmnElement="Activity_0kce977" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="470" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1lon2qv_di" bpmnElement="Activity_132636m">
-        <dc:Bounds x="2100" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0ua9lj6_di" bpmnElement="Gateway_0ua9lj6" isMarkerVisible="true">
-        <dc:Bounds x="1925" y="215" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1va155p_di" bpmnElement="Event_1jfz6dk" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
-        <dc:Bounds x="2392" y="350" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2374" y="393" width="72" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_12gbl24" bpmnElement="Activity_0hp732o" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="1780" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1clcfsu_di" bpmnElement="Activity_01xvqn0" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="1053" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_11xj1kv" bpmnElement="Activity_0d9av47">
-        <dc:Bounds x="2100" y="58" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0kp1fqr_di" bpmnElement="Gateway_0kp1fqr" isMarkerVisible="true">
-        <dc:Bounds x="605" y="215" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0mw9iyy_di" bpmnElement="Event_0mw9iyy">
-        <dc:Bounds x="2392" y="80" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2380" y="123" width="61" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1squlpg" bpmnElement="Activity_1647ldd">
-        <dc:Bounds x="2250" y="58" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1kekryj_di" bpmnElement="Event_WaitForEmail">
-        <dc:Bounds x="172" y="222" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="151" y="266" width="78" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0v9uhlr_di" bpmnElement="Activity_0waqzte">
-        <dc:Bounds x="290" y="200" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0icwfki_di" bpmnElement="Activity_04glkkx" isExpanded="true">
         <dc:Bounds x="690" y="350" width="960" height="620" />
         <bpmndi:BPMNLabel />
@@ -732,6 +680,14 @@
           <dc:Bounds x="902" y="652" width="46" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_1omte3n" bpmnElement="Activity_0tn95r9" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1620" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1y1vn4t_di" bpmnElement="Activity_0kce977" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="470" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0rqvkub_di" bpmnElement="Activity_0sw5ued" isExpanded="true" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="1790" y="540" width="448" height="180" />
         <bpmndi:BPMNLabel />
@@ -760,23 +716,53 @@
         <di:waypoint x="2060" y="630" />
         <di:waypoint x="2142" y="630" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0p70jxz_di" bpmnElement="Association_0p70jxz">
-        <di:waypoint x="1708" y="200" />
-        <di:waypoint x="1745" y="161" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1h2tjie_di" bpmnElement="Association_1h2tjie">
-        <di:waypoint x="558" y="200" />
-        <di:waypoint x="595" y="161" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0p2ywpv_di" bpmnElement="Association_0p2ywpv">
-        <di:waypoint x="1113" y="200" />
-        <di:waypoint x="1122" y="162" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_0fquesm_di" bpmnElement="Event_0fquesm">
-        <dc:Bounds x="532" y="262" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_1lon2qv_di" bpmnElement="Activity_132636m">
+        <dc:Bounds x="2100" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ua9lj6_di" bpmnElement="Gateway_0ua9lj6" isMarkerVisible="true">
+        <dc:Bounds x="1925" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1va155p_di" bpmnElement="Event_1jfz6dk" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="2392" y="350" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="546" y="330" width="68" height="40" />
+          <dc:Bounds x="2374" y="393" width="72" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_12gbl24" bpmnElement="Activity_0hp732o" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="1780" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1clcfsu_di" bpmnElement="Activity_01xvqn0" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="1053" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_11xj1kv" bpmnElement="Activity_0d9av47">
+        <dc:Bounds x="2100" y="58" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0kp1fqr_di" bpmnElement="Gateway_0kp1fqr" isMarkerVisible="true">
+        <dc:Bounds x="605" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mw9iyy_di" bpmnElement="Event_0mw9iyy">
+        <dc:Bounds x="2392" y="80" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2380" y="123" width="61" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1squlpg" bpmnElement="Activity_1647ldd">
+        <dc:Bounds x="2250" y="58" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kekryj_di" bpmnElement="Event_WaitForEmail">
+        <dc:Bounds x="172" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="151" y="266" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0v9uhlr_di" bpmnElement="Activity_0waqzte">
+        <dc:Bounds x="290" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0oibtxl_di" bpmnElement="TextAnnotation_0oibtxl">
         <dc:Bounds x="1110" y="121" width="200" height="41" />
@@ -789,6 +775,12 @@
       <bpmndi:BPMNShape id="TextAnnotation_0fpqtvh_di" bpmnElement="TextAnnotation_0fpqtvh">
         <dc:Bounds x="1720" y="120" width="100" height="41" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fquesm_di" bpmnElement="Event_0fquesm">
+        <dc:Bounds x="532" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="546" y="330" width="68" height="40" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_06wqta8" bpmnElement="Flow_1imcl82">
         <di:waypoint x="1153" y="240" />
@@ -831,9 +823,9 @@
         <di:waypoint x="1720" y="240" />
         <di:waypoint x="1780" y="240" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pe445y_di" bpmnElement="Flow_0pe445y">
-        <di:waypoint x="390" y="240" />
-        <di:waypoint x="470" y="240" />
+      <bpmndi:BPMNEdge id="Flow_0fghmqt_di" bpmnElement="Flow_0fghmqt">
+        <di:waypoint x="208" y="240" />
+        <di:waypoint x="290" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0coeih9_di" bpmnElement="Flow_0coeih9">
         <di:waypoint x="570" y="240" />
@@ -880,9 +872,21 @@
         <di:waypoint x="2350" y="98" />
         <di:waypoint x="2392" y="98" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0fghmqt_di" bpmnElement="Flow_0fghmqt">
-        <di:waypoint x="208" y="240" />
-        <di:waypoint x="290" y="240" />
+      <bpmndi:BPMNEdge id="Flow_0pe445y_di" bpmnElement="Flow_0pe445y">
+        <di:waypoint x="390" y="240" />
+        <di:waypoint x="470" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0p2ywpv_di" bpmnElement="Association_0p2ywpv">
+        <di:waypoint x="1113" y="200" />
+        <di:waypoint x="1122" y="162" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1h2tjie_di" bpmnElement="Association_1h2tjie">
+        <di:waypoint x="558" y="200" />
+        <di:waypoint x="595" y="161" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0p70jxz_di" bpmnElement="Association_0p70jxz">
+        <di:waypoint x="1708" y="200" />
+        <di:waypoint x="1745" y="161" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

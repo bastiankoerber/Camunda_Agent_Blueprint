@@ -1,6 +1,6 @@
 # Camunda AI Email Support Blueprint (Alpha)
 
-> **Important ⚠️**  This blueprint targets **Camunda 8.8.0-alpha5** clusters (SaaS or Self-Managed).  The **AI Agent Connector**, **Vector Database Connector** used here are **alpha** components; breaking changes can occur between alpha releases.
+> **Important ⚠️**  This blueprint targets **Camunda 8.8.0-alpha6** clusters (SaaS or Self-Managed).  The **AI Agent Connector**, **Vector Database Connector** used here are **alpha** components; breaking changes can occur between alpha releases.
 
 A ready-to-import solution that demonstrates an AI-driven email conversation loop with:
 
@@ -29,7 +29,7 @@ This link imports **all required artifacts** in two steps:
 
 | Requirement                             | Notes                                                                                              |
 |-----------------------------------------|----------------------------------------------------------------------------------------------------|
-| **Camunda 8.8.0-alpha5** cluster        | Cloud SaaS or Self-Managed;                                                                        |
+| **Camunda 8.8.0-alpha6** cluster        | Cloud SaaS or Self-Managed;                                                                        |
 | Email account (SMTP/IMAP) & credentials | For Gmail use an App Password; for others use provider-specific credentials.                       |
 | AWS IAM user                            | Permissions: `bedrock:InvokeModel` (Claude 3 Sonnet/Haiku) and `aoss:*` for your OpenSearch index. |
 | Outbound internet access                | Connectors must reach your email server, Bedrock, and OpenSearch endpoints.                        |
